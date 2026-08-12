@@ -7,7 +7,7 @@ import streamlit as st
 # =========================================================
 st.set_page_config(
     page_title="MBTI 포켓몬 추천기",
-    page_icon="✨",
+    page_icon="💧",
     layout="centered"
 )
 
@@ -394,6 +394,7 @@ mbti_pokemon = {
 st.html("""
 <style>
 
+/* Streamlit 상단 흰색 영역 최대한 숨기기 */
 [data-testid="stHeader"],
 [data-testid="stToolbar"],
 [data-testid="stStatusWidget"] {
@@ -405,49 +406,61 @@ footer {
     visibility: hidden;
 }
 
+
+/* 전체 배경 */
 .stApp {
     background:
         radial-gradient(
-            circle at 18% 8%,
-            rgba(255, 221, 94, 0.26),
+            circle at 15% 8%,
+            rgba(68, 165, 238, 0.22),
             transparent 28%
         ),
         linear-gradient(
             180deg,
-            #FFF4C7 0%,
-            #FFF9E6 48%,
-            #FFFDF7 100%
+            #EAF7FF 0%,
+            #F4FAFF 52%,
+            #FFFFFF 100%
         );
 }
 
 .block-container {
-    max-width: 940px;
-    padding-top: 0.55rem;
-    padding-bottom: 0.55rem;
+    max-width: 920px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.45rem;
 }
 
 
-/* 시작 화면 */
+/* =======================================================
+   시작 화면
+   ======================================================= */
 .hero-card {
-    background: #FFFDF7;
-    border: 4px solid #E3B32B;
+    background:
+        linear-gradient(
+            145deg,
+            #E7F6FF 0%,
+            #CCEFFF 100%
+        );
+
+    border: 4px solid #2B78C5;
     border-radius: 26px;
-    padding: 18px 22px 16px;
+
+    padding: 17px 22px 15px;
+
     text-align: center;
 
     box-shadow:
-        0 10px 26px rgba(100, 69, 14, 0.12);
+        0 10px 28px rgba(27, 94, 153, 0.15);
 
-    margin-bottom: 12px;
+    margin-bottom: 11px;
 }
 
 .hero-ball {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
 
     margin: 0 auto 6px;
 
-    border: 4px solid #49351B;
+    border: 4px solid #133D61;
     border-radius: 50%;
 
     position: relative;
@@ -455,10 +468,10 @@ footer {
     background:
         linear-gradient(
             180deg,
-            #E85B4D 0%,
-            #E85B4D 43%,
-            #49351B 43%,
-            #49351B 57%,
+            #E84D4D 0%,
+            #E84D4D 43%,
+            #133D61 43%,
+            #133D61 57%,
             #FFFFFF 57%,
             #FFFFFF 100%
         );
@@ -469,12 +482,12 @@ footer {
 
     position: absolute;
 
-    width: 11px;
-    height: 11px;
+    width: 10px;
+    height: 10px;
 
-    background: white;
+    background: #FFFFFF;
 
-    border: 3px solid #49351B;
+    border: 3px solid #133D61;
     border-radius: 50%;
 
     left: 50%;
@@ -484,260 +497,264 @@ footer {
 }
 
 .hero-title {
-    font-size: 34px;
+    color: #123D63;
+
+    font-size: 33px;
     font-weight: 900;
 
-    color: #4B3513;
-
-    letter-spacing: -1.2px;
+    letter-spacing: -1px;
 }
 
 .hero-description {
-    margin-top: 5px;
+    margin-top: 4px;
+
+    color: #4B7393;
 
     font-size: 15px;
-
-    color: #816A42;
 }
 
 
-/* 버튼 */
+/* =======================================================
+   MBTI 버튼
+   ======================================================= */
 div.stButton > button {
     width: 100%;
 
-    min-height: 43px;
+    min-height: 42px;
 
-    border:
-        2px solid #DCAA31;
-
+    border: 2px solid #4A9CDD;
     border-radius: 13px;
 
-    background: #FFE58A;
+    background:
+        linear-gradient(
+            180deg,
+            #E6F7FF 0%,
+            #CDEEFF 100%
+        );
 
-    color: #503914;
+    color: #174F7A;
 
     font-size: 16px;
     font-weight: 800;
 
     box-shadow:
-        0 3px 0 #C79728;
+        0 3px 0 #2E78B5;
 
-    transition: 0.12s;
+    transition: 0.12s ease;
 }
 
 div.stButton > button:hover {
-    background: #FFD64F;
+    background: #B9E5FF;
 
-    color: #412D0B;
+    color: #0B3E67;
 
-    border-color: #CE981C;
+    border-color: #2F80ED;
 
     transform: translateY(-2px);
 }
 
 
-/* 포켓몬 카드 */
+/* =======================================================
+   푸른 포켓몬 카드
+   ======================================================= */
 .pokemon-card {
     background:
         linear-gradient(
             145deg,
-            #FFF6C9 0%,
-            #FFE8A0 100%
+            #BFE8FF 0%,
+            #82CAFA 58%,
+            #62AFE4 100%
         );
 
-    border:
-        6px solid #DCA923;
-
+    border: 7px solid #266CA9;
     border-radius: 28px;
 
     box-shadow:
-        0 14px 32px rgba(99, 68, 12, 0.18),
-        inset 0 0 0 2px rgba(255, 255, 255, 0.72);
+        0 15px 34px rgba(26, 86, 135, 0.22),
+        inset 0 0 0 2px rgba(255,255,255,0.55);
 
     overflow: hidden;
 }
 
+
+/* 카드 상단 */
 .card-top {
-    padding: 10px 18px 8px;
+    padding: 9px 17px 8px;
 
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+
+    background:
+        rgba(255,255,255,0.18);
 
     border-bottom:
-        2px solid rgba(120, 85, 20, 0.14);
+        2px solid rgba(15, 67, 105, 0.18);
 }
 
 .mbti-badge {
-    background: #E6B629;
+    background: #FFFFFF;
 
-    color: #473107;
+    color: #155181;
 
+    border: 2px solid #3E8FD2;
     border-radius: 999px;
 
-    padding: 6px 14px;
+    padding: 5px 13px;
 
     font-size: 15px;
     font-weight: 900;
 }
 
 .dex-number {
-    color: #806329;
+    color: #164D76;
 
     font-size: 13px;
     font-weight: 800;
 }
 
+
+/* 카드 본문 */
 .card-body {
     display: grid;
 
     grid-template-columns:
         0.95fr 1.05fr;
 
-    min-height: 315px;
+    min-height: 305px;
 }
 
 
-/* 왼쪽 */
+/* 왼쪽: 포켓몬 */
 .visual-area {
-    padding: 10px 16px;
+    padding: 8px 15px;
 
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
     justify-content: center;
 
     border-right:
-        2px solid rgba(120, 85, 20, 0.13);
+        2px solid rgba(15, 67, 105, 0.15);
 
     background:
         radial-gradient(
             circle,
-            rgba(255,255,255,.82) 0%,
-            rgba(255,255,255,.18) 60%,
-            transparent 61%
+            rgba(255,255,255,0.88) 0%,
+            rgba(255,255,255,0.30) 54%,
+            transparent 55%
         );
 }
 
 .pokemon-image {
     width: 100%;
 
-    max-width: 245px;
-    max-height: 215px;
+    max-width: 238px;
+    max-height: 205px;
 
     object-fit: contain;
 
     filter:
         drop-shadow(
-            0 9px 8px rgba(88,57,8,.12)
+            0 10px 8px rgba(20, 64, 98, 0.18)
         );
 }
 
 .pokemon-name {
-    color: #B66807;
+    color: #0D4978;
 
-    font-size: 38px;
-
+    font-size: 37px;
     font-weight: 900;
 
     line-height: 1.05;
+
+    text-shadow:
+        0 1px 0 rgba(255,255,255,0.8);
 }
 
 .small-label {
-    margin-top: 3px;
+    margin-top: 2px;
 
-    color: #937131;
+    color: #3A6D92;
 
     font-size: 12px;
-
     font-weight: 700;
 }
 
 
-/* 오른쪽 */
+/* 오른쪽: 설명 */
 .info-area {
-    padding: 17px 20px;
+    padding: 16px 19px;
 
     display: flex;
-
     flex-direction: column;
-
     justify-content: center;
 }
 
 .info-title {
-    color: #75551C;
+    color: #164D75;
 
     font-size: 14px;
-
     font-weight: 900;
 
     margin-bottom: 6px;
 }
 
 .reason-box {
-    padding: 14px 16px;
+    padding: 13px 15px;
 
-    border:
-        2px solid #E1C576;
-
+    border: 2px solid #55A2D7;
     border-radius: 15px;
 
     background:
-        rgba(255, 253, 243, 0.9);
+        rgba(255,255,255,0.84);
 
-    color: #54432A;
+    color: #294E68;
 
-    font-size: 16px;
-
+    font-size: 15px;
     line-height: 1.62;
 
     word-break: keep-all;
 }
 
 .match-box {
-    margin-top: 10px;
+    margin-top: 9px;
 
-    padding: 9px 13px;
+    padding: 8px 12px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     border:
-        2px dashed #C79621;
+        2px dashed #287AC0;
 
     border-radius: 14px;
 
-    background: #FFE178;
+    background:
+        rgba(224,244,255,0.94);
 }
 
 .match-label {
-    color: #73571E;
+    color: #315E7E;
 
     font-size: 13px;
-
     font-weight: 800;
 }
 
 .match-type {
-    color: #553A04;
+    color: #0D4875;
 
-    font-size: 24px;
-
+    font-size: 23px;
     font-weight: 900;
 }
 
 .footer-note {
-    margin-top: 5px;
+    margin-top: 4px;
 
     text-align: center;
 
-    color: #9A8967;
+    color: #718DA0;
 
     font-size: 11px;
 }
@@ -752,7 +769,7 @@ div.stButton > button:hover {
     }
 
     .hero-title {
-        font-size: 28px;
+        font-size: 27px;
     }
 
     .hero-description {
@@ -760,7 +777,7 @@ div.stButton > button:hover {
     }
 
     div.stButton > button {
-        min-height: 41px;
+        min-height: 40px;
         font-size: 14px;
     }
 
@@ -772,26 +789,25 @@ div.stButton > button:hover {
         border-right: 0;
 
         border-bottom:
-            2px solid rgba(120,85,20,.13);
+            2px solid rgba(15, 67, 105, 0.15);
     }
 
     .pokemon-image {
-        max-width: 190px;
-        max-height: 165px;
+        max-width: 185px;
+        max-height: 155px;
     }
 
     .pokemon-name {
-        font-size: 31px;
+        font-size: 30px;
     }
 
     .info-area {
-        padding: 13px;
+        padding: 12px;
     }
 
     .reason-box {
         font-size: 14px;
     }
-
 }
 
 </style>
@@ -823,7 +839,7 @@ if st.session_state.selected_mbti is None:
     </div>
 
     <div class="hero-description">
-        나의 MBTI를 선택하고 나와 닮은 포켓몬을 랜덤으로 만나보세요!
+        나의 MBTI를 선택하고 나와 닮은 포켓몬을 만나보세요!
     </div>
 
 </div>
@@ -838,6 +854,7 @@ if st.session_state.selected_mbti is None:
     ]
 
 
+    # 4 × 4 버튼
     for start in range(0, 16, 4):
 
         cols = st.columns(
@@ -863,9 +880,7 @@ if st.session_state.selected_mbti is None:
                     use_container_width=True
                 ):
 
-                    st.session_state.selected_mbti = (
-                        mbti
-                    )
+                    st.session_state.selected_mbti = mbti
 
                     st.session_state.selected_pokemon = (
                         random.choice(
@@ -901,6 +916,9 @@ else:
     )
 
 
+    # -----------------------------------------------------
+    # 포켓몬 카드
+    # -----------------------------------------------------
     st.html(
         f"""
 <div class="pokemon-card">
@@ -953,7 +971,7 @@ else:
             <div class="match-box">
 
                 <div class="match-label">
-                    💛 잘 맞는 MBTI
+                    💙 잘 맞는 MBTI
                 </div>
 
                 <div class="match-type">
@@ -972,7 +990,7 @@ else:
 
 
     # =====================================================
-    # 결과 버튼
+    # 하단 버튼
     # =====================================================
     col1, col2 = st.columns(
         2,
@@ -980,11 +998,11 @@ else:
     )
 
 
-    # 같은 MBTI의 다른 포켓몬 추천
+    # 같은 MBTI에서 다른 포켓몬 추천
     with col1:
 
         if st.button(
-            "🎲 같은 MBTI로 다시 추천",
+            "🎲 다른 포켓몬 추천",
             use_container_width=True
         ):
 
@@ -1000,15 +1018,13 @@ else:
             ]
 
             st.session_state.selected_pokemon = (
-                random.choice(
-                    candidates
-                )
+                random.choice(candidates)
             )
 
             st.rerun()
 
 
-    # 처음 화면으로 돌아가기
+    # 처음으로 돌아가기
     with col2:
 
         if st.button(
@@ -1016,13 +1032,9 @@ else:
             use_container_width=True
         ):
 
-            st.session_state.selected_mbti = (
-                None
-            )
+            st.session_state.selected_mbti = None
 
-            st.session_state.selected_pokemon = (
-                None
-            )
+            st.session_state.selected_pokemon = None
 
             st.rerun()
 
