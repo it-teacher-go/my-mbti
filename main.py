@@ -398,8 +398,28 @@ mbti_pokemon = {
 # CSS
 # st.html을 사용하므로 HTML이 코드처럼 노출되지 않음
 # =========================================================
+
 st.html("""
 <style>
+/* Streamlit 상단 헤더 공간 숨기기 */
+[data-testid="stHeader"] {
+    display: none;
+}
+
+/* 상단 툴바 숨기기 */
+[data-testid="stToolbar"] {
+    display: none;
+}
+
+/* 상태 위젯 공간 숨기기 */
+[data-testid="stStatusWidget"] {
+    display: none;
+}
+
+/* 메인 콘텐츠를 위쪽으로 당기기 */
+.block-container {
+    padding-top: 1rem;
+}
 
 .stApp {
     background:
