@@ -1,8 +1,9 @@
 import streamlit as st
 import random
 
+
 # =========================================================
-# 기본 설정
+# 페이지 기본 설정
 # =========================================================
 st.set_page_config(
     page_title="MBTI 포켓몬 추천",
@@ -12,8 +13,8 @@ st.set_page_config(
 
 
 # =========================================================
-# 포켓몬 이미지 주소
-# PokeAPI 공개 스프라이트 저장소 사용
+# 포켓몬 이미지
+# PokeAPI Sprites 공식 아트워크 주소 사용
 # =========================================================
 def get_pokemon_image_url(pokedex_id):
     return (
@@ -23,8 +24,8 @@ def get_pokemon_image_url(pokedex_id):
 
 
 # =========================================================
-# MBTI별 궁합 유형
-# 재미를 위한 간단한 매칭입니다.
+# MBTI별 궁합
+# 재미를 위한 간단한 매칭
 # =========================================================
 mbti_match = {
     "INTJ": "ENFP",
@@ -51,9 +52,7 @@ mbti_match = {
 
 # =========================================================
 # MBTI별 추천 포켓몬
-# (포켓몬 이름, 도감번호, 추천 이유)
-#
-# 각 MBTI별로 3마리 중 랜덤으로 1마리를 추천합니다.
+# (이름, 도감번호, 추천 이유)
 # =========================================================
 mbti_pokemon = {
 
@@ -396,297 +395,326 @@ mbti_pokemon = {
 
 
 # =========================================================
-# 화면 디자인
+# CSS
+# st.html을 사용하므로 HTML이 코드처럼 노출되지 않음
 # =========================================================
-st.markdown(
-    """
-    <style>
+st.html("""
+<style>
 
-    /* 전체 배경 */
-    .stApp {
-        background:
-            linear-gradient(
-                180deg,
-                #FFF3C4 0%,
-                #FFF9E8 55%,
-                #FFFDF7 100%
-            );
-    }
+.stApp {
+    background:
+        linear-gradient(
+            180deg,
+            #FFF2BE 0%,
+            #FFF8DF 50%,
+            #FFFDF6 100%
+        );
+}
 
-    /* 페이지 너비 */
+.block-container {
+    max-width: 850px;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+
+/* -------------------------
+   첫 화면
+------------------------- */
+
+.hero-card {
+    background: #FFFDF7;
+    border: 3px solid #E9B934;
+    border-radius: 30px;
+    padding: 34px 24px;
+    text-align: center;
+    box-shadow: 0 12px 28px rgba(120, 88, 20, 0.12);
+    margin-bottom: 24px;
+}
+
+.hero-icon {
+    font-size: 54px;
+    line-height: 1.2;
+}
+
+.hero-title {
+    color: #503813;
+    font-size: 44px;
+    font-weight: 900;
+    margin-top: 8px;
+    letter-spacing: -1.5px;
+}
+
+.hero-description {
+    color: #806A42;
+    font-size: 19px;
+    line-height: 1.7;
+    margin-top: 12px;
+}
+
+
+/* -------------------------
+   MBTI 버튼
+------------------------- */
+
+div.stButton > button {
+    width: 100%;
+    min-height: 56px;
+
+    border: 2px solid #E3BB4D;
+    border-radius: 17px;
+
+    background: #FFE58C;
+    color: #513A13;
+
+    font-size: 19px;
+    font-weight: 800;
+
+    box-shadow: 0 4px 0 #D7AF43;
+
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease;
+}
+
+div.stButton > button:hover {
+    background: #FFDA56;
+    border-color: #D8A72E;
+    color: #44300C;
+    transform: translateY(-2px);
+}
+
+div.stButton > button:active {
+    transform: translateY(1px);
+}
+
+
+/* -------------------------
+   포켓몬 카드
+------------------------- */
+
+.pokemon-card {
+    position: relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            #FFFDF5,
+            #FFF0B4
+        );
+
+    border: 5px solid #E9B632;
+    border-radius: 32px;
+
+    padding: 28px 28px 22px;
+
+    text-align: center;
+
+    box-shadow:
+        0 15px 38px rgba(112, 78, 19, 0.16);
+
+    margin-bottom: 20px;
+}
+
+
+/* 카드 상단 작은 원 */
+.card-circle {
+    width: 15px;
+    height: 15px;
+
+    margin: 0 auto 12px;
+
+    border-radius: 50%;
+
+    background: #E24D3E;
+
+    box-shadow:
+        22px 0 0 #F5CE4A,
+        -22px 0 0 #69A9E8;
+}
+
+
+.mbti-badge {
+    display: inline-block;
+
+    background: #F1C645;
+    color: #51390F;
+
+    padding: 8px 20px;
+
+    border-radius: 999px;
+
+    font-size: 18px;
+    font-weight: 900;
+}
+
+
+.pokemon-name {
+    color: #B86C0D;
+
+    font-size: 48px;
+    font-weight: 900;
+
+    margin-top: 12px;
+
+    letter-spacing: -1px;
+}
+
+
+.dex-number {
+    color: #91733F;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    margin-top: 3px;
+}
+
+
+/* -------------------------
+   추천 이유
+------------------------- */
+
+.reason-box {
+    max-width: 690px;
+
+    margin: 20px auto;
+
+    background: #FFF9E8;
+
+    border: 2px solid #EFD785;
+
+    border-radius: 20px;
+
+    padding: 21px 25px;
+
+    color: #59482C;
+
+    font-size: 19px;
+    line-height: 1.8;
+
+    text-align: center;
+
+    word-break: keep-all;
+}
+
+
+.reason-title {
+    font-size: 17px;
+    font-weight: 800;
+
+    color: #8A681F;
+
+    margin-bottom: 9px;
+}
+
+
+/* -------------------------
+   궁합
+------------------------- */
+
+.match-box {
+    max-width: 470px;
+
+    margin: 0 auto 18px;
+
+    background: #FFE99A;
+
+    border: 2px dashed #D4A72D;
+
+    border-radius: 20px;
+
+    padding: 17px;
+}
+
+
+.match-title {
+    color: #806329;
+
+    font-size: 16px;
+}
+
+
+.match-type {
+    color: #60420B;
+
+    font-size: 30px;
+    font-weight: 900;
+
+    margin-top: 2px;
+}
+
+
+/* -------------------------
+   포켓몬 이미지
+------------------------- */
+
+[data-testid="stImage"] img {
+    max-height: 340px;
+    object-fit: contain;
+}
+
+
+/* -------------------------
+   아래 안내
+------------------------- */
+
+.footer {
+    margin-top: 25px;
+
+    color: #9A8968;
+
+    font-size: 13px;
+
+    text-align: center;
+
+    line-height: 1.6;
+}
+
+
+/* -------------------------
+   모바일
+------------------------- */
+
+@media (max-width: 650px) {
+
     .block-container {
-        max-width: 900px;
-        padding-top: 2.2rem;
-        padding-bottom: 3rem;
-    }
-
-
-    /* 상단 제목 카드 */
-    .hero-card {
-        background: #FFFDF6;
-        border: 3px solid #F0C95B;
-        border-radius: 30px;
-        padding: 32px 25px;
-        text-align: center;
-        box-shadow:
-            0 12px 30px rgba(110, 76, 20, 0.10);
-        margin-bottom: 25px;
-    }
-
-    .hero-icon {
-        font-size: 54px;
-        margin-bottom: 5px;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 
     .hero-title {
-        font-size: 44px;
-        font-weight: 900;
-        color: #523B17;
-        letter-spacing: -1.5px;
+        font-size: 32px;
     }
 
     .hero-description {
-        margin-top: 10px;
-        font-size: 19px;
-        line-height: 1.7;
-        color: #7B6540;
+        font-size: 16px;
     }
 
-
-    /* MBTI 선택 버튼 */
     div.stButton > button {
-
-        width: 100%;
-
-        min-height: 55px;
-
-        border-radius: 17px;
-
-        border: 1px solid #E1BC50;
-
-        background: #FFE58C;
-
-        color: #513C17;
-
-        font-size: 19px;
-
-        font-weight: 800;
-
-        box-shadow:
-            0 4px 0 #D9B74F;
-
-        transition: 0.15s;
+        min-height: 50px;
+        font-size: 16px;
     }
 
-
-    div.stButton > button:hover {
-
-        background: #FFDA58;
-
-        color: #44300C;
-
-        border-color: #D5AA34;
-
-        transform: translateY(-2px);
-    }
-
-
-    /* 결과 카드 */
-    .pokemon-card {
-
-        background:
-            linear-gradient(
-                145deg,
-                #FFFDF4,
-                #FFF5CB
-            );
-
-        border: 4px solid #E8BC3C;
-
-        border-radius: 30px;
-
-        padding: 28px;
-
-        text-align: center;
-
-        box-shadow:
-            0 13px 35px rgba(101, 73, 20, 0.15);
-
-        margin-bottom: 15px;
-    }
-
-
-    /* 카드 상단 MBTI */
-    .mbti-badge {
-
-        display: inline-block;
-
-        background: #F2C94C;
-
-        color: #4E3814;
-
-        padding: 8px 20px;
-
-        border-radius: 999px;
-
-        font-size: 18px;
-
-        font-weight: 900;
-    }
-
-
-    /* 포켓몬 이름 */
     .pokemon-name {
-
-        font-size: 46px;
-
-        font-weight: 900;
-
-        color: #C97D12;
-
-        margin-top: 10px;
-
-        margin-bottom: 5px;
+        font-size: 38px;
     }
 
-
-    /* 도감 번호 */
-    .dex-number {
-
-        color: #967544;
-
-        font-size: 16px;
-
-        font-weight: 700;
-
-        margin-bottom: 5px;
-    }
-
-
-    /* 추천 이유 */
     .reason-box {
-
-        max-width: 680px;
-
-        margin:
-            20px auto 20px;
-
-        background: #FFF8DF;
-
-        border: 2px solid #F1D98A;
-
-        border-radius: 18px;
-
-        padding: 20px 24px;
-
-        color: #59492F;
-
-        font-size: 19px;
-
-        line-height: 1.8;
-
-        word-break: keep-all;
+        font-size: 17px;
     }
 
+}
 
-    /* 궁합 */
-    .match-box {
-
-        max-width: 480px;
-
-        margin: auto;
-
-        background: #FFE898;
-
-        border: 2px dashed #D7AE3D;
-
-        border-radius: 18px;
-
-        padding: 16px;
-    }
-
-
-    .match-title {
-
-        color: #82652F;
-
-        font-size: 16px;
-    }
-
-
-    .match-type {
-
-        color: #60440E;
-
-        font-size: 29px;
-
-        font-weight: 900;
-
-        margin-top: 2px;
-    }
-
-
-    /* 안내 문구 */
-    .footer {
-
-        margin-top: 25px;
-
-        text-align: center;
-
-        color: #9B8968;
-
-        font-size: 13px;
-    }
-
-
-    /* 포켓몬 이미지 크기 */
-    [data-testid="stImage"] img {
-
-        max-height: 330px;
-
-        object-fit: contain;
-    }
-
-
-    /* 스마트폰 */
-    @media (max-width: 650px) {
-
-        .hero-title {
-            font-size: 32px;
-        }
-
-        .hero-description {
-            font-size: 16px;
-        }
-
-        div.stButton > button {
-            min-height: 49px;
-            font-size: 16px;
-        }
-
-        .pokemon-name {
-            font-size: 38px;
-        }
-
-        .reason-box {
-            font-size: 17px;
-        }
-
-    }
-
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+</style>
+""")
 
 
 # =========================================================
 # 세션 상태
 # =========================================================
-
 if "selected_mbti" not in st.session_state:
     st.session_state.selected_mbti = None
-
 
 if "selected_pokemon" not in st.session_state:
     st.session_state.selected_pokemon = None
@@ -695,46 +723,29 @@ if "selected_pokemon" not in st.session_state:
 # =========================================================
 # MBTI 선택 화면
 # =========================================================
-
 if st.session_state.selected_mbti is None:
 
-    st.markdown(
-        """
-        <div class="hero-card">
+    st.html("""
+<div class="hero-card">
+    <div class="hero-icon">✨</div>
 
-            <div class="hero-icon">
-                ✨
-            </div>
+    <div class="hero-title">
+        MBTI 포켓몬 추천기
+    </div>
 
-            <div class="hero-title">
-                MBTI 포켓몬 추천기
-            </div>
-
-            <div class="hero-description">
-
-                나의 MBTI를 선택하면<br>
-
-                성격과 잘 어울리는 포켓몬을 찾아드려요!
-
-            </div>
-
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    <div class="hero-description">
+        나의 MBTI를 선택하면<br>
+        성격과 잘 어울리는 포켓몬을 찾아드려요!
+    </div>
+</div>
+""")
 
 
-    # MBTI 순서
     mbti_list = [
-
         "INTJ", "INTP", "ENTJ", "ENTP",
-
         "INFJ", "INFP", "ENFJ", "ENFP",
-
         "ISTJ", "ISFJ", "ESTJ", "ESFJ",
-
         "ISTP", "ISFP", "ESTP", "ESFP"
-
     ]
 
 
@@ -743,9 +754,9 @@ if st.session_state.selected_mbti is None:
 
         cols = st.columns(4)
 
-        current_row = mbti_list[start:start + 4]
+        row = mbti_list[start:start + 4]
 
-        for col, mbti in zip(cols, current_row):
+        for col, mbti in zip(cols, row):
 
             with col:
 
@@ -757,139 +768,146 @@ if st.session_state.selected_mbti is None:
 
                     st.session_state.selected_mbti = mbti
 
-                    st.session_state.selected_pokemon = (
-                        random.choice(
-                            mbti_pokemon[mbti]
-                        )
+                    st.session_state.selected_pokemon = random.choice(
+                        mbti_pokemon[mbti]
                     )
 
                     st.rerun()
 
 
-    st.markdown(
-        """
-        <div class="footer">
-
-        MBTI와 포켓몬 매칭은 재미를 위한 콘텐츠입니다 😊
-
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.html("""
+<div class="footer">
+    MBTI와 포켓몬 매칭은 재미를 위한 콘텐츠입니다 😊
+</div>
+""")
 
 
 # =========================================================
 # 결과 화면
 # =========================================================
-
 else:
 
-    selected_mbti = (
-        st.session_state.selected_mbti
-    )
+    selected_mbti = st.session_state.selected_mbti
 
-    name, dex_id, reason = (
-        st.session_state.selected_pokemon
-    )
+    name, dex_id, reason = st.session_state.selected_pokemon
 
     match = mbti_match[selected_mbti]
 
 
+    # -----------------------------------------------------
     # 포켓몬 카드 상단
-    st.markdown(
+    # -----------------------------------------------------
+    st.html(
         f"""
-        <div class="pokemon-card">
+<div class="pokemon-card">
 
-            <div class="mbti-badge">
-                {selected_mbti} 타입
-            </div>
+    <div class="card-circle"></div>
 
-            <div class="pokemon-name">
-                {name}
-            </div>
+    <div class="mbti-badge">
+        {selected_mbti} 타입
+    </div>
 
-            <div class="dex-number">
-                Pokédex No. {dex_id}
-            </div>
+    <div class="pokemon-name">
+        {name}
+    </div>
 
-        </div>
-        """,
-        unsafe_allow_html=True
+    <div class="dex-number">
+        Pokédex No. {dex_id}
+    </div>
+
+</div>
+"""
     )
 
 
+    # -----------------------------------------------------
     # 포켓몬 이미지
-    col1, col2, col3 = st.columns(
+    # -----------------------------------------------------
+    left, center, right = st.columns(
         [1, 2.2, 1]
     )
 
-    with col2:
+    with center:
 
         st.image(
-            get_pokemon_image_url(
-                dex_id
-            ),
+            get_pokemon_image_url(dex_id),
             use_container_width=True
         )
 
 
-    # 추천 이유 + 궁합
-    st.markdown(
+    # -----------------------------------------------------
+    # 추천 이유
+    # -----------------------------------------------------
+    st.html(
         f"""
-        <div class="reason-box">
+<div class="reason-box">
 
-            <b>💬 이 포켓몬을 추천하는 이유</b>
+    <div class="reason-title">
+        💬 이 포켓몬을 추천하는 이유
+    </div>
 
-            <br><br>
+    {reason}
 
-            {reason}
-
-        </div>
-
-
-        <div class="match-box">
-
-            <div class="match-title">
-                💛 잘 맞는 MBTI
-            </div>
-
-            <div class="match-type">
-                {match}
-            </div>
-
-        </div>
-        """,
-        unsafe_allow_html=True
+</div>
+"""
     )
 
 
+    # -----------------------------------------------------
+    # 궁합
+    # -----------------------------------------------------
+    st.html(
+        f"""
+<div class="match-box">
+
+    <div class="match-title">
+        💛 잘 맞는 MBTI
+    </div>
+
+    <div class="match-type">
+        {match}
+    </div>
+
+</div>
+"""
+    )
+
+
+    # 버튼 위 여백
     st.write("")
 
 
-    # 같은 MBTI로 포켓몬 다시 뽑기
-    col_left, col_right = st.columns(2)
+    # -----------------------------------------------------
+    # 버튼
+    # -----------------------------------------------------
+    col1, col2 = st.columns(2)
 
 
-    with col_left:
+    # 같은 MBTI에서 다른 포켓몬 뽑기
+    with col1:
 
         if st.button(
             "🎲 다른 포켓몬 추천",
             use_container_width=True
         ):
 
-            st.session_state.selected_pokemon = (
-                random.choice(
-                    mbti_pokemon[
-                        selected_mbti
-                    ]
-                )
+            current_pokemon = st.session_state.selected_pokemon
+
+            candidates = [
+                pokemon
+                for pokemon in mbti_pokemon[selected_mbti]
+                if pokemon != current_pokemon
+            ]
+
+            st.session_state.selected_pokemon = random.choice(
+                candidates
             )
 
             st.rerun()
 
 
-    # MBTI 처음부터 선택
-    with col_right:
+    # MBTI 처음부터 고르기
+    with col2:
 
         if st.button(
             "↩ MBTI 다시 고르기",
@@ -897,21 +915,17 @@ else:
         ):
 
             st.session_state.selected_mbti = None
-
             st.session_state.selected_pokemon = None
 
             st.rerun()
 
 
-    st.markdown(
-        """
-        <div class="footer">
-
-        포켓몬 이미지: PokeAPI Sprites<br>
-
-        Made with Streamlit
-
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    # -----------------------------------------------------
+    # 출처
+    # -----------------------------------------------------
+    st.html("""
+<div class="footer">
+    포켓몬 이미지: PokeAPI Sprites<br>
+    MBTI 매칭은 재미를 위한 콘텐츠입니다.
+</div>
+""")
